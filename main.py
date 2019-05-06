@@ -57,6 +57,18 @@ class Matrix():
         for m in range(0, self.numColumns):
             self.matrixElements[row - 1][m] = self.matrixElements[row - 1][m] * scalar
 
+    # Private function to switch two numRows
+    def __switchRows__(self, rowOne, rowTwo):
+        self.__isNumber__(rowOne, rowTwo)
+        if rowOne > self.numRows or rowOne <= 0:
+            raise MissingMatrixInputError("The first mentioned row does not exist")
+        if rowTwo > self.numRows or rowTwo <= 0:
+            raise MissingMatrixInputError("The second mentioned row does not exist")
+        tempRow = []
+        for m in range(0, self.numColumns):
+            tempRow.append(self.matrixElements[rowOne - 1][m])
+            self.matrixElements[rowOne - 1][m] = self.matrixElements[rowTwo - 1][m]
+            self.matrixElements[rowTwo - 1][m] = tempRow[m]
 
 
     # Simple function to raise a TypeError for nonnumbers
@@ -72,4 +84,6 @@ print(x.to_string())
 x.scalar_mult(5)
 print(x.to_string())
 x.__rowMult__(2,4)
+print(x.to_string())
+x.__switchRows__(1,2)
 print(x.to_string())
