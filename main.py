@@ -29,6 +29,7 @@ class Matrix():
                 newRow.append(functionInputs.pop())
             self.matrixElements.append(newRow)
 
+    # A function to display the matrix as a matrix on the screen
     def to_string(self):
         stringRepresentation  = ""
         for n in range(0, self.numRows):
