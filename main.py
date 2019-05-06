@@ -1,5 +1,6 @@
 import math
-import MissingMatrixInputError
+from MissingMatrixInputError import MissingMatrixInputError
+
 
 
 class Matrix():
@@ -9,8 +10,7 @@ class Matrix():
             raise MissingMatrixInputError("There was an incorrect number of inputs.")
 
         for input in inputs:
-            if not isinstance(input, int) and not isinstance(input, float):
-                raise TypeError()
+            self.__isNumber__(input)
 
         self.numRows = numRows
         self.numColumns = numColumns
@@ -39,16 +39,36 @@ class Matrix():
 
         return stringRepresentation;
 
-
+    # Function to multiply the matrix by a scalar
     def scalar_mult(self, alpha):
-        if not isinstance(alpha, int) and not isinstance(alpha, float):
-            raise TypeError()
+        self.__isNumber__(alpha)
 
         for n in range(0, self.numRows):
             for m in range(0, self.numColumns):
                 self.matrixElements[n][m] = self.matrixElements[n][m] * alpha
 
-x = Matrix(2, 3, 1, 2, 3, 4, 5, 6)
+    # Private function to perform a row operation - multiply a row by a scalar
+    def __rowMult__(self, row, scalar):
+        self.__isNumber__(scalar, row)
+        if row > self.numRows or row <= 0:
+            raise MissingMatrixInputError("There is no row with that number!")
+
+        for m in range(0, self.numColumns):
+            self.matrixElements[row - 1][m] = self.matrixElements[row - 1][m] * scalar
+
+
+
+    # Simple function to raise a TypeError for nonnumbers
+    def __isNumber__(self, *inputs):
+        for input in inputs:
+            if not isinstance(input, int) and not isinstance(input, float):
+                raise TypeError()
+
+
+# Simple tests since I don't know junit test in python yet since I'm a noob
+x = Matrix(2, 3, 1, 0, 5, -1, 8, 5)
 print(x.to_string())
-x.scalar_mult(5.5)
+x.scalar_mult(5)
+print(x.to_string())
+x.__rowMult__(2,4)
 print(x.to_string())
