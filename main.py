@@ -1,5 +1,6 @@
 import math
 from MissingMatrixInputError import MissingMatrixInputError
+from NotApplicableError import NotApplicableError
 
 
 
@@ -28,6 +29,32 @@ class Matrix():
             for m in range(0, numColumns):
                 newRow.append(functionInputs.pop())
             self.matrixElements.append(newRow)
+
+    # A function to determine the determinant of the matrix, if it is a square matrix
+    def determinant(self):
+        if self.numRows != self.numColumns:
+            raise NotApplicableError("Not a square matrix, cannot find determinant")
+        # If the matrix is a 1 x 1 matrix, the determinant is its one input
+        if self.numRows == 1:
+            return self.matrixElements[0][0]
+        coFactors = []
+        for n in range(0, self.numRows):
+            minorInputs = []
+            # Creates the minor matrix inputs
+            for n2 in range(0, self.numRows):
+                # Skips the current column
+                if n2 == n:
+                    continue
+                for m in range(1, self.numColumns):
+                    minorInputs.append(self.matrixElements[n2][m])
+            minor = Matrix(self.numRows-1, self.numColumns-1, *minorInputs)
+            coFactors.append(self.matrixElements[n][0] * minor.determinant() * (-1)**n)
+
+        determinant = 0;
+        for x in coFactors:
+            determinant += x
+
+        return determinant
 
     # A function to display the matrix as a matrix on the screen
     def to_string(self):
@@ -90,7 +117,7 @@ class Matrix():
 
 
 # Simple tests since I don't know junit test in python yet since I'm a noob
-x = Matrix(2, 3, 1, 0, 5, -1, 8, 5)
+"""x = Matrix(2, 3, 1, 0, 5, -1, 8, 5)
 print(x.to_string())
 x.scalar_mult(5)
 print(x.to_string())
@@ -99,4 +126,8 @@ print(x.to_string())
 x.__switchRows__(1,2)
 print(x.to_string())
 x.__addRow__(1,2, 2)
+print(x.to_string()) """
+y = (1, 0, 5, 0, 8, 5, 0, 0, 6)
+x = Matrix(3, 3, *y)
 print(x.to_string())
+print(x.determinant())
