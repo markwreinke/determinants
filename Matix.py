@@ -75,6 +75,9 @@ class Matrix():
             for m in range(0, self.numColumns):
                 self.matrixElements[n][m] = self.matrixElements[n][m] * alpha
 
+    #For matrix addition
+    def addMatrix(self, matrixTwo):
+
     # Private function to perform a row operation - multiply a row by a scalar
     def __rowMult__(self, row, scalar):
         self.__isNumber__(scalar, row)
