@@ -30,6 +30,11 @@ class Matrix():
                 newRow.append(functionInputs.pop())
             self.matrixElements.append(newRow)
 
+    def __eq__(self, other):
+        return self.to_string() == other.to_string()
+
+
+
     # A function to determine the determinant of the matrix, if it is a square matrix
     def determinant(self):
         if self.numRows != self.numColumns:
@@ -75,6 +80,10 @@ class Matrix():
             for m in range(0, self.numColumns):
                 self.matrixElements[n][m] = self.matrixElements[n][m] * alpha
 
+    #For matrix addition
+    def addMatrix(self, matrixTwo):
+        ## TODO:
+        pass;
     # Private function to perform a row operation - multiply a row by a scalar
     def __rowMult__(self, row, scalar):
         self.__isNumber__(scalar, row)
@@ -126,8 +135,8 @@ print(x.to_string())
 x.__switchRows__(1,2)
 print(x.to_string())
 x.__addRow__(1,2, 2)
-print(x.to_string()) """
+print(x.to_string())
 y = (1, 0, 5, 0, 8, 5, 0, 0, 6)
 x = Matrix(3, 3, *y)
 print(x.to_string())
-print(x.determinant())
+print(x.determinant())"""
